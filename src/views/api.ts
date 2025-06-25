@@ -1,6 +1,6 @@
 import type { TreeViewNode } from 'reactive-vscode'
 import type { ScopedConfigKeyTypeMap } from '../generated/meta'
-import { createSingletonComposable, extensionContext, ref, useTreeView, watchEffect } from 'reactive-vscode'
+import { createSingletonComposable, extensionContext, ref, useCommand, useTreeView, watchEffect } from 'reactive-vscode'
 import { TreeItemCollapsibleState } from 'vscode'
 import { config } from '../config'
 import { apiListMenu } from '../constants/api'
@@ -79,6 +79,11 @@ export const useApiTreeView = createSingletonComposable(async () => {
     }))
   }
 
+  async function refreshApiTreeView() {
+    roots.value = await getRootNode(config.yapiProjects)
+    extensionContext.value?.globalState.update('apiTreeView', roots.value)
+  }
+
   watchEffect(async () => {
     const projectList = config.yapiProjects
     const storage = extensionContext.value?.globalState.get<TreeViewNode[]>('apiTreeView')
@@ -88,9 +93,10 @@ export const useApiTreeView = createSingletonComposable(async () => {
       return
     }
 
-    roots.value = await getRootNode(projectList)
-    extensionContext.value?.globalState.update('apiTreeView', roots.value)
+    await refreshApiTreeView()
   })
+
+  useCommand('api-helper.refreshApiTreeView', refreshApiTreeView)
 
   return useTreeView(
     'apiTreeView',

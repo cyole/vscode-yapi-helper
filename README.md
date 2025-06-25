@@ -20,9 +20,10 @@
 
 <!-- commands -->
 
-| Command                    | Title                       |
-| -------------------------- | --------------------------- |
-| `api-helper.viewApiDetail` | API Helper: Open API Detail |
+| Command                         | Title                             |
+| ------------------------------- | --------------------------------- |
+| `api-helper.viewApiDetail`      | API Helper: Open API Detail       |
+| `api-helper.refreshApiTreeView` | API Helper: Refresh API Tree View |
 
 <!-- commands -->
 

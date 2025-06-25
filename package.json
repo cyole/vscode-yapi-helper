@@ -45,6 +45,12 @@
         "command": "api-helper.viewApiDetail",
         "title": "Open API Detail",
         "category": "API Helper"
+      },
+      {
+        "command": "api-helper.refreshApiTreeView",
+        "title": "Refresh API Tree View",
+        "category": "API Helper",
+        "icon": "$(refresh)"
       }
     ],
     "configuration": {
@@ -107,6 +113,15 @@
           "id": "apiTreeView",
           "name": "API",
           "icon": "resources/api.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "api-helper.refreshApiTreeView",
+          "when": "view == apiTreeView",
+          "group": "navigation"
         }
       ]
     }
