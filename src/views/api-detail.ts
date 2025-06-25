@@ -2,7 +2,7 @@ import type { ExtensionContext, Webview, WebviewPanel } from 'vscode'
 import type { ApiInfo } from '../../webview-ui/src/types'
 import type { YapiApiData } from './api'
 import getHtml from '@tomjs/vscode-extension-webview'
-import { useWebviewPanel } from 'reactive-vscode'
+import { extensionContext, useWebviewPanel } from 'reactive-vscode'
 import { ExtensionMode, ViewColumn } from 'vscode'
 import { config } from '../config'
 import { apiDetail } from '../constants/api'
@@ -10,7 +10,8 @@ import { getUri, request, uuid } from '../utils'
 
 const openedPanelMap = new Map<string, WebviewPanel>()
 
-export async function useApiDetailView(context: ExtensionContext, apiData: YapiApiData) {
+export async function useApiDetailView(apiData: YapiApiData) {
+  const context = extensionContext.value as ExtensionContext
   const isDev = context.extensionMode === ExtensionMode.Development
 
   function getWebviewContent(webview: Webview) {

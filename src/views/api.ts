@@ -1,6 +1,6 @@
 import type { TreeViewNode } from 'reactive-vscode'
 import type { ScopedConfigKeyTypeMap } from '../generated/meta'
-import { createSingletonComposable, ref, useTreeView, watchEffect } from 'reactive-vscode'
+import { createSingletonComposable, extensionContext, ref, useTreeView, watchEffect } from 'reactive-vscode'
 import { TreeItemCollapsibleState } from 'vscode'
 import { config } from '../config'
 import { apiListMenu } from '../constants/api'
@@ -47,7 +47,7 @@ export const useApiTreeView = createSingletonComposable(async () => {
       children: await getChildNodes(project),
       treeItem: {
         label: project.name,
-        collapsibleState: TreeItemCollapsibleState.Expanded,
+        collapsibleState: TreeItemCollapsibleState.Collapsed,
       },
     })))
   }
@@ -81,7 +81,15 @@ export const useApiTreeView = createSingletonComposable(async () => {
 
   watchEffect(async () => {
     const projectList = config.yapiProjects
+    const storage = extensionContext.value?.globalState.get<TreeViewNode[]>('apiTreeView')
+    if (storage && storage.length === projectList.length) {
+      logger.info('从本地缓存中获取数据')
+      roots.value = storage
+      return
+    }
+
     roots.value = await getRootNode(projectList)
+    extensionContext.value?.globalState.update('apiTreeView', roots.value)
   })
 
   return useTreeView(
