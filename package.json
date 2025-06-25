@@ -1,0 +1,143 @@
+{
+  "publisher": "cyole",
+  "name": "api-helper",
+  "displayName": "API Helper",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.12.2",
+  "description": "",
+  "author": "Cyole <i@cyole.me>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/cyole",
+  "homepage": "https://github.com/cyole/vscode-api-helper#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyole/vscode-api-helper"
+  },
+  "bugs": {
+    "url": "https://github.com/cyole/vscode-api-helper/issues"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/cyole"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "icon": "resources/icon.png",
+  "files": [
+    "LICENSE.md",
+    "dist/*",
+    "resources/*"
+  ],
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "extensionPack": [
+    "antfu.browse-lite"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "api-helper.viewApiDetail",
+        "title": "Open API Detail",
+        "category": "API Helper"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "api-helper.apiDataSource": {
+          "type": "string",
+          "enum": [
+            "yapi",
+            "swagger"
+          ],
+          "default": "yapi"
+        },
+        "api-helper.swaggerBaseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "swagger文档的baseUrl"
+        },
+        "api-helper.yapiBaseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "yapi文档的baseUrl"
+        },
+        "api-helper.yapiProjects": {
+          "type": "array",
+          "default": [],
+          "description": "yapi项目列表",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "项目id"
+              },
+              "name": {
+                "type": "string",
+                "description": "项目名称"
+              },
+              "token": {
+                "type": "string",
+                "description": "访问项目的api token"
+              }
+            }
+          }
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "api-helper",
+          "title": "API Helper",
+          "icon": "resources/api.svg"
+        }
+      ]
+    },
+    "views": {
+      "api-helper": [
+        {
+          "id": "apiTreeView",
+          "name": "API",
+          "icon": "resources/api.svg"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsdown src/index.ts --external vscode",
+    "dev": "nr build --watch --sourcemap",
+    "prepare": "nr update",
+    "update": "vscode-ext-gen --output src/generated/meta.ts",
+    "lint": "eslint .",
+    "vscode:prepublish": "nr build",
+    "publish": "vsce publish --no-dependencies",
+    "pack": "vsce package --no-dependencies",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && nr publish"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:dev",
+    "@antfu/ni": "catalog:dev",
+    "@tomjs/vscode-extension-webview": "catalog:build",
+    "@types/node": "catalog:types",
+    "@types/vscode": "catalog:types",
+    "@vscode/vsce": "catalog:dev",
+    "bumpp": "catalog:dev",
+    "eslint": "catalog:dev",
+    "esno": "catalog:dev",
+    "pnpm": "catalog:dev",
+    "reactive-vscode": "catalog:dev",
+    "tsdown": "catalog:build",
+    "typescript": "catalog:dev",
+    "vite": "catalog:build",
+    "vscode-ext-gen": "catalog:dev"
+  }
+}

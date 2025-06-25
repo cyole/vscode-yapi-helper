@@ -1,0 +1,91 @@
+import type { TreeViewNode } from 'reactive-vscode'
+import type { ScopedConfigKeyTypeMap } from '../generated/meta'
+import { createSingletonComposable, ref, useTreeView, watchEffect } from 'reactive-vscode'
+import { TreeItemCollapsibleState } from 'vscode'
+import { config } from '../config'
+import { apiListMenu } from '../constants/api'
+import { logger, request } from '../utils'
+
+export interface YapiApiData {
+  title: string
+  path: string
+  method: string
+  _id: string
+  project_id: number
+  project_token?: string
+}
+
+export interface YapiMenuData {
+  name: string
+  desc?: string
+  list: YapiApiData[]
+}
+
+type Project = ScopedConfigKeyTypeMap['yapiProjects'][number]
+
+async function getYapiMenuData(projectId?: number, token?: string) {
+  if (!projectId || !token) {
+    logger.error(`getYapiMenuData: projectId or token is empty, projectId: ${projectId}, token: ${token}`)
+    return []
+  }
+
+  const data = await request<YapiMenuData[]>(`${config.yapiBaseUrl}${apiListMenu}`, {
+    project_id: projectId.toString(),
+    token,
+  })
+
+  logger.info(`请求getYapiMenuData结束 -> ${projectId}`)
+
+  return data
+}
+
+export const useApiTreeView = createSingletonComposable(async () => {
+  const roots = ref<TreeViewNode[]>([])
+
+  async function getRootNode(projects: Project[]) {
+    return await Promise.all(projects.map(async project => ({
+      children: await getChildNodes(project),
+      treeItem: {
+        label: project.name,
+        collapsibleState: TreeItemCollapsibleState.Expanded,
+      },
+    })))
+  }
+
+  async function getChildNodes(project: Project): Promise<TreeViewNode[]> {
+    const data = (await getYapiMenuData(project.id, project.token))
+      .filter(item => item.list.length > 0)
+
+    return data.map(item => ({
+      treeItem: {
+        label: item.name,
+        description: item.desc || '',
+        collapsibleState: TreeItemCollapsibleState.Collapsed,
+      },
+      children: item.list.map((item) => {
+        item.project_token = project.token
+        return {
+          treeItem: {
+            label: `${item.method.toUpperCase()} ${item.title}`,
+            description: item.path || '',
+            command: {
+              command: 'api-helper.viewApiDetail',
+              title: 'API Detail',
+              arguments: [item],
+            },
+          },
+        }
+      }),
+    }))
+  }
+
+  watchEffect(async () => {
+    const projectList = config.yapiProjects
+    roots.value = await getRootNode(projectList)
+  })
+
+  return useTreeView(
+    'apiTreeView',
+    roots,
+  )
+})
