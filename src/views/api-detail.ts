@@ -11,7 +11,7 @@ import { getUri, request, uuid } from '../utils'
 const openedPanelMap = new Map<string, WebviewPanel>()
 
 export async function useApiDetailView(apiData: YapiApiData) {
-  const context = extensionContext.value as ExtensionContext
+  const context = extensionContext.value!
   const isDev = context.extensionMode === ExtensionMode.Development
 
   function getWebviewContent(webview: Webview) {
