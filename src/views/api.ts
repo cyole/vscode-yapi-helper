@@ -95,5 +95,8 @@ export const useApiTreeView = createSingletonComposable(async () => {
   return useTreeView(
     'apiTreeView',
     roots,
+    {
+      showCollapseAll: true,
+    },
   )
 })
