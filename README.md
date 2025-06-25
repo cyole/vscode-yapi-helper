@@ -26,14 +26,6 @@
 
 <!-- commands -->
 
-## Sponsors
-
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.png'/>
-  </a>
-</p>
-
 ## License
 
 [MIT](./LICENSE.md) License © 2022 [Cyole](https://github.com/cyole)
