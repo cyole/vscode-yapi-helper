@@ -19,6 +19,7 @@ const columns: DataTableColumns<ApiTableData> = [
   {
     key: 'name',
     title: '名称',
+    width: 200,
   },
   {
     key: 'type',
@@ -38,10 +39,12 @@ const columns: DataTableColumns<ApiTableData> = [
   {
     key: 'description',
     title: '备注',
+    width: 200,
   },
   {
     key: 'other',
     title: '其他信息',
+    width: 200,
     render: (rowData) => {
       if (rowData.other?.enum) {
         return `枚举值：${rowData.other.enum.join(',')}`
