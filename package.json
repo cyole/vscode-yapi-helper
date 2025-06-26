@@ -4,7 +4,7 @@
   "displayName": "API Helper",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.12.2",
+  "packageManager": "pnpm@10.12.3",
   "description": "",
   "author": "Cyole <i@cyole.me>",
   "license": "MIT",
