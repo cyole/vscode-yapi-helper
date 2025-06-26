@@ -1,7 +1,7 @@
 import type { TreeViewNode } from 'reactive-vscode'
 import type { ScopedConfigKeyTypeMap } from '../generated/meta'
 import { createSingletonComposable, extensionContext, ref, useCommand, useTreeView, watchEffect } from 'reactive-vscode'
-import { TreeItemCollapsibleState } from 'vscode'
+import { ProgressLocation, TreeItemCollapsibleState, window } from 'vscode'
 import { config } from '../config'
 import { apiListMenu } from '../constants/api'
 import { logger, request } from '../utils'
@@ -96,7 +96,14 @@ export const useApiTreeView = createSingletonComposable(async () => {
     await refreshApiTreeView()
   })
 
-  useCommand('api-helper.refreshApiTreeView', refreshApiTreeView)
+  useCommand('api-helper.refreshApiTreeView', () => {
+    window.withProgress({
+      location: ProgressLocation.Window,
+    }, async (progress) => {
+      progress.report({ message: '正在更新API数据...' })
+      await refreshApiTreeView()
+    })
+  })
 
   return useTreeView(
     'apiTreeView',
