@@ -80,8 +80,13 @@ export const useApiTreeView = createSingletonComposable(async () => {
   }
 
   async function refreshApiTreeView() {
-    roots.value = await getRootNode(config.yapiProjects)
-    extensionContext.value?.globalState.update('apiTreeView', roots.value)
+    window.withProgress({
+      location: ProgressLocation.Window,
+    }, async (progress) => {
+      progress.report({ message: '正在更新API数据...' })
+      roots.value = await getRootNode(config.yapiProjects)
+      extensionContext.value?.globalState.update('apiTreeView', roots.value)
+    })
   }
 
   watchEffect(async () => {
@@ -96,14 +101,7 @@ export const useApiTreeView = createSingletonComposable(async () => {
     await refreshApiTreeView()
   })
 
-  useCommand('api-helper.refreshApiTreeView', () => {
-    window.withProgress({
-      location: ProgressLocation.Window,
-    }, async (progress) => {
-      progress.report({ message: '正在更新API数据...' })
-      await refreshApiTreeView()
-    })
-  })
+  useCommand('api-helper.refreshApiTreeView', refreshApiTreeView)
 
   return useTreeView(
     'apiTreeView',
