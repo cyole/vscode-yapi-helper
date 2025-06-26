@@ -7,12 +7,10 @@
 
 <!-- configs -->
 
-| Key                         | Description       | Type     | Default  |
-| --------------------------- | ----------------- | -------- | -------- |
-| `api-helper.apiDataSource`  |                   | `string` | `"yapi"` |
-| `api-helper.swaggerBaseUrl` | swagger文档的baseUrl | `string` | `""`     |
-| `api-helper.yapiBaseUrl`    | yapi文档的baseUrl    | `string` | `""`     |
-| `api-helper.yapiProjects`   | yapi项目列表          | `array`  | `[]`     |
+| Key                        | Description    | Type     | Default |
+| -------------------------- | -------------- | -------- | ------- |
+| `yapi-helper.yapiBaseUrl`  | yapi文档的baseUrl | `string` | `""`    |
+| `yapi-helper.yapiProjects` | yapi项目列表       | `array`  | `[]`    |
 
 <!-- configs -->
 
@@ -20,10 +18,10 @@
 
 <!-- commands -->
 
-| Command                         | Title                             |
-| ------------------------------- | --------------------------------- |
-| `api-helper.viewApiDetail`      | API Helper: Open API Detail       |
-| `api-helper.refreshApiTreeView` | API Helper: Refresh API Tree View |
+| Command                          | Title                             |
+| -------------------------------- | --------------------------------- |
+| `yapi-helper.viewApiDetail`      | API Helper: Open API Detail       |
+| `yapi-helper.refreshApiTreeView` | API Helper: Refresh API Tree View |
 
 <!-- commands -->
 

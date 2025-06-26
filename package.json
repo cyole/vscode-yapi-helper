@@ -1,21 +1,21 @@
 {
   "publisher": "cyole",
-  "name": "api-helper",
-  "displayName": "API Helper",
-  "version": "0.0.0",
+  "name": "yapi-helper",
+  "displayName": "YAPI Helper",
+  "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@10.12.3",
   "description": "",
   "author": "Cyole <i@cyole.me>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/cyole",
-  "homepage": "https://github.com/cyole/vscode-api-helper#readme",
+  "homepage": "https://github.com/cyole/vscode-yapi-helper#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cyole/vscode-api-helper"
+    "url": "https://github.com/cyole/vscode-yapi-helper"
   },
   "bugs": {
-    "url": "https://github.com/cyole/vscode-api-helper/issues"
+    "url": "https://github.com/cyole/vscode-yapi-helper/issues"
   },
   "sponsor": {
     "url": "https://github.com/sponsors/cyole"
@@ -42,12 +42,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "api-helper.viewApiDetail",
+        "command": "yapi-helper.viewApiDetail",
         "title": "Open API Detail",
         "category": "API Helper"
       },
       {
-        "command": "api-helper.refreshApiTreeView",
+        "command": "yapi-helper.refreshApiTreeView",
         "title": "Refresh API Tree View",
         "category": "API Helper",
         "icon": "$(refresh)"
@@ -56,25 +56,12 @@
     "configuration": {
       "type": "object",
       "properties": {
-        "api-helper.apiDataSource": {
-          "type": "string",
-          "enum": [
-            "yapi",
-            "swagger"
-          ],
-          "default": "yapi"
-        },
-        "api-helper.swaggerBaseUrl": {
-          "type": "string",
-          "default": "",
-          "description": "swagger文档的baseUrl"
-        },
-        "api-helper.yapiBaseUrl": {
+        "yapi-helper.yapiBaseUrl": {
           "type": "string",
           "default": "",
           "description": "yapi文档的baseUrl"
         },
-        "api-helper.yapiProjects": {
+        "yapi-helper.yapiProjects": {
           "type": "array",
           "default": [],
           "description": "yapi项目列表",
@@ -101,14 +88,14 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "api-helper",
+          "id": "yapi-helper",
           "title": "API Helper",
           "icon": "resources/api.svg"
         }
       ]
     },
     "views": {
-      "api-helper": [
+      "yapi-helper": [
         {
           "id": "apiTreeView",
           "name": "API",
@@ -125,7 +112,7 @@
     "menus": {
       "view/title": [
         {
-          "command": "api-helper.refreshApiTreeView",
+          "command": "yapi-helper.refreshApiTreeView",
           "when": "view == apiTreeView",
           "group": "navigation"
         }

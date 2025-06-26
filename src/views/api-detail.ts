@@ -49,7 +49,7 @@ export async function useApiDetailView(apiData: YapiApiData) {
   }
 
   const { panel } = useWebviewPanel(
-    `apiHelperDetailView-${apiData._id}`,
+    `yapiHelperDetailView-${apiData._id}`,
     `API: ${apiData.title}`,
     '',
     {
