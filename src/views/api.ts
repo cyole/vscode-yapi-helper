@@ -81,7 +81,7 @@ export const useApiTreeView = createSingletonComposable(async () => {
 
   async function refreshApiTreeView() {
     window.withProgress({
-      location: ProgressLocation.Window,
+      location: { viewId: 'apiTreeView' },
     }, async (progress) => {
       progress.report({ message: '正在更新API数据...' })
       roots.value = await getRootNode(config.yapiProjects)
