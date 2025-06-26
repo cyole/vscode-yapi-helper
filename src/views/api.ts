@@ -1,9 +1,10 @@
 import type { TreeViewNode } from 'reactive-vscode'
 import type { ScopedConfigKeyTypeMap } from '../generated/meta'
 import { createSingletonComposable, extensionContext, ref, useCommand, useTreeView, watchEffect } from 'reactive-vscode'
-import { ProgressLocation, TreeItemCollapsibleState, window } from 'vscode'
+import { TreeItemCollapsibleState, window } from 'vscode'
 import { config } from '../config'
 import { apiListMenu } from '../constants/api'
+import { commands } from '../generated/meta'
 import { logger, request } from '../utils'
 
 export interface YapiApiData {
@@ -69,7 +70,7 @@ export const useApiTreeView = createSingletonComposable(async () => {
             label: `${item.method.toUpperCase()} ${item.title}`,
             description: item.path || '',
             command: {
-              command: 'api-helper.viewApiDetail',
+              command: commands.viewApiDetail,
               title: 'API Detail',
               arguments: [item],
             },
@@ -101,7 +102,7 @@ export const useApiTreeView = createSingletonComposable(async () => {
     await refreshApiTreeView()
   })
 
-  useCommand('api-helper.refreshApiTreeView', refreshApiTreeView)
+  useCommand(commands.refreshApiTreeView, refreshApiTreeView)
 
   return useTreeView(
     'apiTreeView',
