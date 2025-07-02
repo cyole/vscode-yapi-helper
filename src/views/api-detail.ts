@@ -12,7 +12,7 @@ const openedPanelMap = new Map<string, WebviewPanel>()
 
 export async function useApiDetailView(apiData: YapiApiData) {
   const context = extensionContext.value!
-  const isDev = context.extensionMode !== ExtensionMode.Development
+  const isDev = context.extensionMode === ExtensionMode.Development
 
   function getWebviewContent(webview: Webview) {
     const stylesUri = getUri(webview, context.extensionUri, ['dist', 'webview-ui', 'assets', 'index.css'])
