@@ -1,4 +1,4 @@
-import type { ExtensionContext, Webview, WebviewPanel } from 'vscode'
+import type { Webview, WebviewPanel } from 'vscode'
 import type { ApiInfo } from '../../webview-ui/src/types'
 import type { YapiApiData } from './api'
 import getHtml from '@tomjs/vscode-extension-webview'
@@ -6,13 +6,13 @@ import { extensionContext, useWebviewPanel } from 'reactive-vscode'
 import { ExtensionMode, ViewColumn } from 'vscode'
 import { config } from '../config'
 import { apiDetail } from '../constants/api'
-import { getUri, request, uuid } from '../utils'
+import { getUri, logger, request, uuid } from '../utils'
 
 const openedPanelMap = new Map<string, WebviewPanel>()
 
 export async function useApiDetailView(apiData: YapiApiData) {
   const context = extensionContext.value!
-  const isDev = context.extensionMode === ExtensionMode.Development
+  const isDev = context.extensionMode !== ExtensionMode.Development
 
   function getWebviewContent(webview: Webview) {
     const stylesUri = getUri(webview, context.extensionUri, ['dist', 'webview-ui', 'assets', 'index.css'])
@@ -31,7 +31,7 @@ export async function useApiDetailView(apiData: YapiApiData) {
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+          <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-${nonce}';">
           <link rel="stylesheet" type="text/css" href="${stylesUri}">
           <title>API Helper Webview</title>
         </head>

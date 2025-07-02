@@ -123,6 +123,7 @@
     "build": "tsdown src/index.ts --external vscode",
     "build:webview-ui": "pnpm -C webview-ui build",
     "dev": "nr build --watch --sourcemap",
+    "dev:webview-ui": "pnpm -C webview-ui dev",
     "prepare": "nr update",
     "update": "vscode-ext-gen --output src/generated/meta.ts",
     "lint": "eslint .",
