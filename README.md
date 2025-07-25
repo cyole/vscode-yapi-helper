@@ -18,10 +18,11 @@
 
 <!-- commands -->
 
-| Command                    | Title                             |
-| -------------------------- | --------------------------------- |
-| `crabu.viewApiDetail`      | API Helper: Open API Detail       |
-| `crabu.refreshApiTreeView` | API Helper: Refresh API Tree View |
+| Command                    | Title                        |
+| -------------------------- | ---------------------------- |
+| `crabu.addToMock`          | Add API to Mock              |
+| `crabu.refreshApiTreeView` | Crabu: Refresh API Tree View |
+| `crabu.searchApi`          | Crabu: Search API            |
 
 <!-- commands -->
 

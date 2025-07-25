@@ -12,6 +12,7 @@ export interface YapiApiData {
   path: string
   method: string
   _id: string
+  catid: string
   project_id: number
   project_token?: string
 }
@@ -57,23 +58,21 @@ export const useApiTreeView = createSingletonComposable(async () => {
     const data = (await getYapiMenuData(project.id, project.token))
       .filter(item => item.list.length > 0)
 
-    return data.map(item => ({
+    return data.map(group => ({
       treeItem: {
-        label: item.name,
-        description: item.desc || '',
+        label: group.name,
+        description: group.desc || '',
         collapsibleState: TreeItemCollapsibleState.Collapsed,
       },
-      children: item.list.map((item) => {
+      children: group.list.map((item) => {
         item.project_token = project.token
         return {
           treeItem: {
-            label: `${item.method.toUpperCase()} ${item.title}`,
-            description: item.path || '',
-            command: {
-              command: commands.viewApiDetail,
-              title: 'API Detail',
-              arguments: [item],
-            },
+            label: item.title,
+            description: `${item.method.toUpperCase()} ${item.path || ''}`,
+            contextValue: 'apiItem',
+            project,
+            apiData: item,
           },
         }
       }),
@@ -103,6 +102,47 @@ export const useApiTreeView = createSingletonComposable(async () => {
   })
 
   useCommand(commands.refreshApiTreeView, refreshApiTreeView)
+
+  useCommand(commands.searchApi, async () => {
+    const searchTerm = await window.showInputBox({
+      prompt: '请输入API名称或路径进行搜索',
+      placeHolder: '例如：订单列表 或 /order/list',
+    })
+
+    if (!searchTerm)
+      return
+
+    const resolvedRoots = await Promise.all(
+      roots.value.map(async root => ({
+        ...root,
+        children: root.children instanceof Promise ? await root.children : root.children,
+      })),
+    )
+
+    const results = resolvedRoots
+      .flatMap(root => root.children || [])
+      .flatMap(node => node.children || [])
+      .filter(node => node.treeItem.label.includes(searchTerm) || node.treeItem.description?.includes(searchTerm))
+
+    if (results.length === 0) {
+      window.showInformationMessage('未找到匹配的API')
+      return
+    }
+
+    window.showQuickPick(results.map(node => ({
+      node,
+      label: `${node.treeItem.project.name}: ${node.treeItem.label}`,
+      detail: node.treeItem.description,
+    })), {
+      placeHolder: '选择一个API',
+      matchOnDescription: true,
+      matchOnDetail: true,
+    }).then((selection) => {
+      if (selection) {
+        logger.info(`选择了API: ${JSON.stringify(selection)}`)
+      }
+    })
+  })
 
   return useTreeView(
     'apiTreeView',

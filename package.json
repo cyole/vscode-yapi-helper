@@ -42,15 +42,22 @@
   "contributes": {
     "commands": [
       {
-        "command": "crabu.viewApiDetail",
-        "title": "Open API Detail",
-        "category": "API Helper"
+        "command": "crabu.searchApi",
+        "title": "Search API",
+        "icon": "$(search)",
+        "category": "Crabu"
       },
       {
         "command": "crabu.refreshApiTreeView",
         "title": "Refresh API Tree View",
-        "category": "API Helper",
-        "icon": "$(refresh)"
+        "icon": "$(refresh)",
+        "category": "Crabu"
+      },
+      {
+        "command": "crabu.addToMock",
+        "title": "Add API to Mock",
+        "icon": "$(plus)",
+        "enablement": "view == apiTreeView && viewItem == apiItem"
       }
     ],
     "configuration": {
@@ -98,7 +105,7 @@
       "crabu": [
         {
           "id": "apiTreeView",
-          "name": "API",
+          "name": "API Tree View",
           "icon": "resources/api.svg"
         }
       ]
@@ -112,9 +119,21 @@
     "menus": {
       "view/title": [
         {
+          "command": "crabu.searchApi",
+          "when": "view == apiTreeView",
+          "group": "navigation"
+        },
+        {
           "command": "crabu.refreshApiTreeView",
           "when": "view == apiTreeView",
           "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "crabu.addToMock",
+          "when": "viewItem == apiItem",
+          "group": "inline"
         }
       ]
     }

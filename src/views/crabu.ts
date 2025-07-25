@@ -1,25 +1,29 @@
+import type { Nullable } from 'reactive-vscode'
 import type { WebviewPanel } from 'vscode'
 import type { YapiApiData } from './api'
 import getHtml from '@tomjs/vscode-extension-webview'
 import { useWebviewPanel } from 'reactive-vscode'
 import { ViewColumn } from 'vscode'
 
-const openedPanelMap = new Map<string, WebviewPanel>()
+let openedPanel: Nullable<WebviewPanel>
 
 export async function useApiDetailView(apiData: YapiApiData) {
   function getWebviewContent() {
-    return getHtml({ serverUrl: 'http://localhost' })
+    const { project_id, catid, _id } = apiData
+    return getHtml({ serverUrl: `http://localhost/api-detail/${project_id}/${catid}/${_id}` })
   }
 
-  if (openedPanelMap.has(apiData._id)) {
-    openedPanelMap.get(apiData._id)?.reveal(ViewColumn.Active)
+  if (openedPanel) {
+    openedPanel.title = `${apiData.title} - Crabu`
+    openedPanel.webview.html = getWebviewContent()
+    openedPanel?.reveal(ViewColumn.Active)
     return
   }
 
   const { panel } = useWebviewPanel(
-    `yapiHelperDetailView-${apiData._id}`,
+    `crabuWebview`,
     `${apiData.title} - Crabu`,
-    '',
+    getWebviewContent(),
     {
       viewColumn: ViewColumn.Active,
     },
@@ -33,16 +37,9 @@ export async function useApiDetailView(apiData: YapiApiData) {
     },
   )
 
-  panel.webview.html = getWebviewContent()
+  openedPanel = panel
 
-  if (openedPanelMap.size > 5) {
-    const firstKey = openedPanelMap.keys().next().value as string
-    openedPanelMap.get(firstKey)?.dispose()
-    openedPanelMap.delete(firstKey)
-  }
-
-  openedPanelMap.set(apiData._id, panel)
   panel.onDidDispose(() => {
-    openedPanelMap.delete(apiData._id)
+    openedPanel = undefined
   })
 }
