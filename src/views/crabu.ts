@@ -18,7 +18,7 @@ export async function useApiDetailView(apiData: YapiApiData) {
 
   const { panel } = useWebviewPanel(
     `yapiHelperDetailView-${apiData._id}`,
-    `API: ${apiData.title}`,
+    `${apiData.title} - Crabu`,
     '',
     {
       viewColumn: ViewColumn.Active,

@@ -1,21 +1,21 @@
 {
   "publisher": "cyole",
-  "name": "yapi-helper",
-  "displayName": "YAPI Helper",
+  "name": "crabu",
+  "displayName": "Crabu",
   "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@10.13.1",
-  "description": "",
+  "description": "A vscode extension for Crabu.",
   "author": "Cyole <i@cyole.me>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/cyole",
-  "homepage": "https://github.com/cyole/vscode-yapi-helper#readme",
+  "homepage": "https://github.com/cyole/vscode-crabu#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cyole/vscode-yapi-helper"
+    "url": "https://github.com/cyole/vscode-crabu"
   },
   "bugs": {
-    "url": "https://github.com/cyole/vscode-yapi-helper/issues"
+    "url": "https://github.com/cyole/vscode-crabu/issues"
   },
   "sponsor": {
     "url": "https://github.com/sponsors/cyole"
@@ -42,12 +42,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "yapi-helper.viewApiDetail",
+        "command": "crabu.viewApiDetail",
         "title": "Open API Detail",
         "category": "API Helper"
       },
       {
-        "command": "yapi-helper.refreshApiTreeView",
+        "command": "crabu.refreshApiTreeView",
         "title": "Refresh API Tree View",
         "category": "API Helper",
         "icon": "$(refresh)"
@@ -56,12 +56,12 @@
     "configuration": {
       "type": "object",
       "properties": {
-        "yapi-helper.yapiBaseUrl": {
+        "crabu.yapiBaseUrl": {
           "type": "string",
           "default": "",
           "description": "yapi文档的baseUrl"
         },
-        "yapi-helper.yapiProjects": {
+        "crabu.yapiProjects": {
           "type": "array",
           "default": [],
           "description": "yapi项目列表",
@@ -88,14 +88,14 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "yapi-helper",
-          "title": "API Helper",
+          "id": "crabu",
+          "title": "Crabu",
           "icon": "resources/api.svg"
         }
       ]
     },
     "views": {
-      "yapi-helper": [
+      "crabu": [
         {
           "id": "apiTreeView",
           "name": "API",
@@ -106,13 +106,13 @@
     "viewsWelcome": [
       {
         "view": "apiTreeView",
-        "contents": "请先在设置中配置项目列表\n [打开设置](command:workbench.action.openSettings?%5B%22api-helper.yapiProjects%22%5D)"
+        "contents": "请先在设置中配置项目列表\n [打开设置](command:workbench.action.openSettings?%5B%22crabu.yapiProjects%22%5D)"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "yapi-helper.refreshApiTreeView",
+          "command": "crabu.refreshApiTreeView",
           "when": "view == apiTreeView",
           "group": "navigation"
         }

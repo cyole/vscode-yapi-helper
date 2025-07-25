@@ -7,10 +7,10 @@
 
 <!-- configs -->
 
-| Key                        | Description    | Type     | Default |
-| -------------------------- | -------------- | -------- | ------- |
-| `yapi-helper.yapiBaseUrl`  | yapi文档的baseUrl | `string` | `""`    |
-| `yapi-helper.yapiProjects` | yapi项目列表       | `array`  | `[]`    |
+| Key                  | Description    | Type     | Default |
+| -------------------- | -------------- | -------- | ------- |
+| `crabu.yapiBaseUrl`  | yapi文档的baseUrl | `string` | `""`    |
+| `crabu.yapiProjects` | yapi项目列表       | `array`  | `[]`    |
 
 <!-- configs -->
 
@@ -18,13 +18,13 @@
 
 <!-- commands -->
 
-| Command                          | Title                             |
-| -------------------------------- | --------------------------------- |
-| `yapi-helper.viewApiDetail`      | API Helper: Open API Detail       |
-| `yapi-helper.refreshApiTreeView` | API Helper: Refresh API Tree View |
+| Command                    | Title                             |
+| -------------------------- | --------------------------------- |
+| `crabu.viewApiDetail`      | API Helper: Open API Detail       |
+| `crabu.refreshApiTreeView` | API Helper: Refresh API Tree View |
 
 <!-- commands -->
 
 ## License
 
-[MIT](./LICENSE.md) License © 2022 [Cyole](https://github.com/cyole)
+[MIT](./LICENSE.md) License © 2025 [Cyole](https://github.com/cyole)
