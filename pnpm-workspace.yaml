@@ -4,7 +4,6 @@ packages:
 catalogs:
   build:
     '@tomjs/vscode-extension-webview': ^2.0.0
-    '@tomjs/vscode-webview': ^2.0.2
     '@vitejs/plugin-vue': ^6.0.0
     '@vitejs/plugin-vue-jsx': ^5.0.1
     tsdown: ^0.13.0

@@ -134,7 +134,6 @@
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
     "@antfu/ni": "catalog:dev",
-    "@tomjs/vscode-extension-webview": "catalog:build",
     "@types/node": "catalog:types",
     "@types/vscode": "^1.102.0",
     "@vscode/vsce": "catalog:dev",
