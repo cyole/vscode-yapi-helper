@@ -36,21 +36,18 @@
   "activationEvents": [
     "onStartupFinished"
   ],
-  "extensionPack": [
-    "antfu.browse-lite"
-  ],
   "contributes": {
     "commands": [
-      {
-        "command": "crabu.searchApi",
-        "title": "Search API",
-        "icon": "$(search)",
-        "category": "Crabu"
-      },
       {
         "command": "crabu.refreshApiTreeView",
         "title": "Refresh API Tree View",
         "icon": "$(refresh)",
+        "category": "Crabu"
+      },
+      {
+        "command": "crabu.searchApi",
+        "title": "Search API",
+        "icon": "$(search)",
         "category": "Crabu"
       },
       {

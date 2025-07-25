@@ -20,8 +20,8 @@
 
 | Command                          | Title                        |
 | -------------------------------- | ---------------------------- |
-| `crabu.searchApi`                | Crabu: Search API            |
 | `crabu.refreshApiTreeView`       | Crabu: Refresh API Tree View |
+| `crabu.searchApi`                | Crabu: Search API            |
 | `crabu.showCrabuWebview`         | Crabu: Show Crabu Webview    |
 | `crabu.addToMock`                | Add API to Mock              |
 | `crabu.genRequestCode`           | Generate Request Code        |
