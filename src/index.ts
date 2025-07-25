@@ -1,5 +1,5 @@
 import type { YapiApiData } from './views/api'
-import { defineExtension, executeCommand, useCommand } from 'reactive-vscode'
+import { defineExtension, useCommand } from 'reactive-vscode'
 import { crabuApiBaseUrl } from './constants/api'
 import { commands } from './generated/meta'
 import { logger } from './utils'
