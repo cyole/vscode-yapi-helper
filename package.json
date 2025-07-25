@@ -54,9 +54,33 @@
         "category": "Crabu"
       },
       {
+        "command": "crabu.showCrabuWebview",
+        "title": "Show Crabu Webview",
+        "icon": "$(globe)",
+        "category": "Crabu"
+      },
+      {
         "command": "crabu.addToMock",
         "title": "Add API to Mock",
         "icon": "$(plus)",
+        "enablement": "view == apiTreeView && viewItem == apiItem"
+      },
+      {
+        "command": "crabu.genRequestCode",
+        "title": "Generate Request Code",
+        "icon": "$(code)",
+        "enablement": "view == apiTreeView && viewItem == apiItem"
+      },
+      {
+        "command": "crabu.genTypeScriptTypes",
+        "title": "Generate TypeScript Types",
+        "icon": "$(file-code)",
+        "enablement": "view == apiTreeView && viewItem == apiItem"
+      },
+      {
+        "command": "crabu.compareWithLatestVersion",
+        "title": "Compare with Latest Version",
+        "icon": "$(diff)",
         "enablement": "view == apiTreeView && viewItem == apiItem"
       }
     ],
@@ -127,11 +151,31 @@
           "command": "crabu.refreshApiTreeView",
           "when": "view == apiTreeView",
           "group": "navigation"
+        },
+        {
+          "command": "crabu.showCrabuWebview",
+          "when": "view == apiTreeView",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
         {
           "command": "crabu.addToMock",
+          "when": "viewItem == apiItem",
+          "group": "inline"
+        },
+        {
+          "command": "crabu.genRequestCode",
+          "when": "viewItem == apiItem",
+          "group": "inline"
+        },
+        {
+          "command": "crabu.genTypeScriptTypes",
+          "when": "viewItem == apiItem",
+          "group": "inline"
+        },
+        {
+          "command": "crabu.compareWithLatestVersion",
           "when": "viewItem == apiItem",
           "group": "inline"
         }

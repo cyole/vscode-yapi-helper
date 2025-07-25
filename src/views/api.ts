@@ -1,6 +1,6 @@
 import type { TreeViewNode } from 'reactive-vscode'
 import type { ScopedConfigKeyTypeMap } from '../generated/meta'
-import { createSingletonComposable, extensionContext, ref, useCommand, useTreeView, watchEffect } from 'reactive-vscode'
+import { createSingletonComposable, executeCommand, extensionContext, ref, useCommand, useTreeView, watchEffect } from 'reactive-vscode'
 import { TreeItemCollapsibleState, window } from 'vscode'
 import { config } from '../config'
 import { apiListMenu } from '../constants/api'
@@ -129,7 +129,7 @@ export const useApiTreeView = createSingletonComposable(async () => {
       return
     }
 
-    window.showQuickPick(results.map(node => ({
+    const selection = await window.showQuickPick(results.map(node => ({
       node,
       label: `${node.treeItem.project.name}: ${node.treeItem.label}`,
       detail: node.treeItem.description,
@@ -137,11 +137,28 @@ export const useApiTreeView = createSingletonComposable(async () => {
       placeHolder: '选择一个API',
       matchOnDescription: true,
       matchOnDetail: true,
-    }).then((selection) => {
-      if (selection) {
-        logger.info(`选择了API: ${JSON.stringify(selection)}`)
-      }
     })
+
+    if (selection) {
+      logger.info(`选择了API: ${JSON.stringify(selection)}`)
+    }
+
+    const action = await window.showQuickPick(
+      [
+        { label: '添加到Mock', value: commands.addToMock },
+        { label: '生成请求代码', value: commands.genRequestCode },
+        { label: '生成TypeScript类型', value: commands.genTypeScriptTypes },
+        { label: '对比最新版本', value: commands.compareWithLatestVersion },
+      ],
+      {
+        placeHolder: '选择操作',
+      },
+    )
+
+    if (!action)
+      return
+
+    executeCommand(action.value, selection?.node)
   })
 
   return useTreeView(

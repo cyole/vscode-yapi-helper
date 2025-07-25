@@ -1,11 +1,14 @@
 import type { YapiApiData } from './views/api'
-import { defineExtension, useCommand } from 'reactive-vscode'
+import { defineExtension, executeCommand, useCommand } from 'reactive-vscode'
+import { crabuApiBaseUrl } from './constants/api'
 import { commands } from './generated/meta'
 import { logger } from './utils'
 import { useApiTreeView } from './views/api'
 import { useApiDetailView } from './views/crabu'
 
 const { activate, deactivate } = defineExtension(() => {
+  useApiTreeView()
+
   useCommand(commands.addToMock, async (event) => {
     logger.info('Adding API to mock:', JSON.stringify(event, null, 2))
 
@@ -16,11 +19,11 @@ const { activate, deactivate } = defineExtension(() => {
 
     const api = event.treeItem.apiData as YapiApiData
 
-    await fetch(`http://localhost/api/interface/add/${api.project_id}/${api._id}`, { method: 'POST' })
+    await fetch(`${crabuApiBaseUrl}/interface/add/${api.project_id}/${api._id}`, { method: 'POST' })
     useApiDetailView(api)
   })
 
-  useApiTreeView()
+  useCommand(commands.showCrabuWebview, useApiDetailView)
 })
 
 export { activate, deactivate }

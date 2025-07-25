@@ -7,14 +7,17 @@ import { ViewColumn } from 'vscode'
 
 let openedPanel: Nullable<WebviewPanel>
 
-export async function useApiDetailView(apiData: YapiApiData) {
+export async function useApiDetailView(apiData?: YapiApiData) {
   function getWebviewContent() {
+    if (!apiData) {
+      return getHtml({ serverUrl: 'http://localhost' })
+    }
+
     const { project_id, catid, _id } = apiData
     return getHtml({ serverUrl: `http://localhost/api-detail/${project_id}/${catid}/${_id}` })
   }
 
   if (openedPanel) {
-    openedPanel.title = `${apiData.title} - Crabu`
     openedPanel.webview.html = getWebviewContent()
     openedPanel?.reveal(ViewColumn.Active)
     return
@@ -22,7 +25,7 @@ export async function useApiDetailView(apiData: YapiApiData) {
 
   const { panel } = useWebviewPanel(
     `crabuWebview`,
-    `${apiData.title} - Crabu`,
+    `Crabu`,
     getWebviewContent(),
     {
       viewColumn: ViewColumn.Active,
